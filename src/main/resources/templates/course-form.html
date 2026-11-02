@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Add course</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<header class="topbar"><a class="brand" th:href="@{/}"><span class="brand-mark">CP</span> Course<span>Track</span></a><nav><a th:href="@{/}">Dashboard</a></nav></header>
+<main class="narrow-container">
+    <a class="back-link" th:href="@{/}">← Back to dashboard</a>
+    <section class="form-panel panel">
+        <p class="eyebrow">GROW YOUR SKILLS</p><h1>Add a new course</h1>
+        <p class="muted">Create a course, then add the topics you want to learn.</p>
+        <div th:if="${error}" class="alert error" th:text="${error}"></div>
+        <form th:action="@{/courses}" method="post">
+            <label for="title">Course name <span>*</span></label>
+            <input id="title" name="title" type="text" maxlength="100" placeholder="e.g. Java Full Stack Development" required>
+            <label for="category">Category</label>
+            <select id="category" name="category"><option value="">Choose a category</option><option>Programming</option><option>Database</option><option>Web Development</option><option>Career</option><option>Other</option></select>
+            <label for="description">Description</label>
+            <textarea id="description" name="description" maxlength="500" rows="4" placeholder="What do you want to achieve with this course?"></textarea>
+            <button class="button primary full-width" type="submit">Create course</button>
+        </form>
+    </section>
+</main>
+</body>
+</html>

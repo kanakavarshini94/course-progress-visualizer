@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Progress Visualizer</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="topbar">
+    <a class="brand" th:href="@{/}">
+        <span class="brand-mark">CP</span> Course<span>Track</span>
+    </a>
+
+    <nav>
+        <a class="active" th:href="@{/}">Dashboard</a>
+        <a th:href="@{/courses/new}" class="nav-cta">+ Add course</a>
+
+        <span style="margin-left: 15px; color: #475569; font-size: 13px;"
+              th:text="${currentUser}">user@email.com</span>
+
+        <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit"
+                    style="margin-left: 12px; padding: 9px 15px; border: none;
+                    border-radius: 6px; background: #fee2e2; color: #b91c1c;
+                    cursor: pointer;">
+                Logout
+            </button>
+        </form>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="welcome">
+        <div>
+            <p class="eyebrow">YOUR LEARNING SPACE</p>
+            <h1>Keep learning. <span>Keep growing.</span></h1>
+            <p class="muted">A clear view of what you've learned and what's next.</p>
+        </div>
+        <a class="button primary" th:href="@{/courses/new}">+ Add new course</a>
+    </section>
+
+    <div th:if="${success}" class="alert success" th:text="${success}"></div>
+    <div th:if="${error}" class="alert error" th:text="${error}"></div>
+
+    <section class="stats-grid">
+        <article class="stat-card">
+            <div class="stat-icon purple">▤</div>
+            <p>Total courses</p>
+            <strong th:text="${totalCourses}">0</strong>
+            <small>Courses you're learning</small>
+        </article>
+
+        <article class="stat-card">
+            <div class="stat-icon green">✓</div>
+            <p>Completed topics</p>
+            <strong th:text="${completedTopics}">0</strong>
+            <small>Milestones achieved</small>
+        </article>
+
+        <article class="stat-card">
+            <div class="stat-icon orange">◷</div>
+            <p>Pending topics</p>
+            <strong th:text="${pendingTopics}">0</strong>
+            <small>Keep moving forward</small>
+        </article>
+
+        <article class="stat-card">
+            <div class="stat-icon blue">↗</div>
+            <p>Overall progress</p>
+            <strong><span th:text="${overallProgress}">0</span>%</strong>
+            <small>Across all your courses</small>
+        </article>
+    </section>
+
+    <section class="overall panel">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">AT A GLANCE</p>
+                <h2>Overall learning progress</h2>
+            </div>
+            <strong class="percent" th:text="${overallProgress} + '%'">0%</strong>
+        </div>
+
+        <div class="progress-track large">
+            <div class="progress-fill"
+                 th:style="'width:' + ${overallProgress} + '%'"></div>
+        </div>
+
+        <p class="muted small"
+           th:text="${completedTopics} + ' of ' + ${totalTopics} + ' topics completed'">
+            0 of 0 topics completed
+        </p>
+    </section>
+
+    <section class="courses-section">
+
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">YOUR LIBRARY</p>
+                <h2>My courses</h2>
+            </div>
+            <span class="muted small"
+                  th:text="${totalCourses} + ' courses'">0 courses</span>
+        </div>
+
+        <div th:if="${#lists.isEmpty(courses)}" class="empty-state panel">
+            <div class="empty-icon">✦</div>
+            <h3>Your learning journey starts here</h3>
+            <p class="muted">
+                Add your first course and list the topics you want to complete.
+            </p>
+            <a class="button primary" th:href="@{/courses/new}">
+                Create your first course
+            </a>
+        </div>
+
+        <div class="course-grid" th:unless="${#lists.isEmpty(courses)}">
+            <article class="course-card" th:each="course : ${courses}">
+
+                <div class="course-top">
+                    <span class="category"
+                          th:text="${course.category != null and !course.category.isEmpty() ? course.category : 'Learning'}">
+                        Learning
+                    </span>
+
+                    <span class="course-percent"
+                          th:text="${course.progress} + '%'">0%</span>
+                </div>
+
+                <h3 th:text="${course.title}">Java</h3>
+
+                <p class="course-description"
+                   th:text="${course.description != null and !course.description.isEmpty() ? course.description : 'Build your knowledge one topic at a time.'}">
+                    Description
+                </p>
+
+                <div class="progress-track">
+                    <div class="progress-fill"
+                         th:style="'width:' + ${course.progress} + '%'"></div>
+                </div>
+
+                <div class="course-meta">
+                    <span th:text="${course.completedCount} + ' / ' + ${#lists.size(course.topics)} + ' topics'">
+                        0 / 0 topics
+                    </span>
+                    <span th:text="${course.pendingCount} + ' remaining'">
+                        0 remaining
+                    </span>
+                </div>
+
+                <a class="text-link"
+                   th:href="@{/courses/{id}(id=${course.id})}">
+                    View course <span>→</span>
+                </a>
+
+            </article>
+        </div>
+    </section>
+
+    <footer>Small steps every day lead to big results.</footer>
+
+</main>
+</body>
+</html>

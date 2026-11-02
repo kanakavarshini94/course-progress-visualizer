@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Course details</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<header class="topbar"><a class="brand" th:href="@{/}"><span class="brand-mark">CP</span> Course<span>Track</span></a><nav><a th:href="@{/}">Dashboard</a><a th:href="@{/courses/new}" class="nav-cta">+ Add course</a></nav></header>
+<main class="container detail-container">
+    <a class="back-link" th:href="@{/}">← Back to dashboard</a>
+    <div th:if="${success}" class="alert success" th:text="${success}"></div><div th:if="${error}" class="alert error" th:text="${error}"></div>
+    <section class="detail-hero panel">
+        <div class="detail-title"><div><span class="category" th:text="${course.category != null and !course.category.isEmpty() ? course.category : 'Learning'}">Learning</span><h1 th:text="${course.title}">Java</h1><p class="muted" th:text="${course.description}">Course description</p></div>
+            <div class="detail-progress"><strong th:text="${course.progress} + '%'">0%</strong><span class="muted small">completed</span></div></div>
+        <div class="progress-track large"><div class="progress-fill" th:style="'width:' + ${course.progress} + '%'"></div></div>
+        <div class="course-meta"><span th:text="${course.completedCount} + ' completed'">0 completed</span><span th:text="${course.pendingCount} + ' pending'">0 pending</span><span th:text="${#lists.size(course.topics)} + ' total topics'">0 total topics</span></div>
+    </section>
+    <section class="topics-layout">
+        <div class="panel topics-panel">
+            <div class="section-heading"><div><p class="eyebrow">YOUR CHECKLIST</p><h2>Course topics</h2></div><span class="muted small" th:text="${#lists.size(course.topics)} + ' topics'">0 topics</span></div>
+            <div th:if="${#lists.isEmpty(course.topics)}" class="empty-inline"><p>No topics added yet. Add your first topic to start tracking progress.</p></div>
+            <div class="topic-row" th:each="topic : ${course.topics}">
+                <form th:action="@{/topics/{id}/toggle(id=${topic.id})}" method="post" class="topic-toggle-form">
+                    <input type="hidden" name="courseId" th:value="${course.id}">
+                    <button class="check-button" type="submit" th:classappend="${topic.completed} ? ' checked' : ''" th:attr="aria-label=${topic.completed} ? 'Mark as pending' : 'Mark as completed'"><span th:text="${topic.completed} ? '✓' : ''"></span></button>
+                </form>
+                <span class="topic-name" th:classappend="${topic.completed} ? ' is-complete' : ''" th:text="${topic.name}">Introduction</span>
+                <span class="status" th:classappend="${topic.completed} ? ' status-done' : ''" th:text="${topic.completed} ? 'Completed' : 'Pending'">Pending</span>
+                <form th:action="@{/topics/{id}/delete(id=${topic.id})}" method="post"><input type="hidden" name="courseId" th:value="${course.id}"><button class="icon-button" type="submit" title="Delete topic" onclick="return confirm('Delete this topic?')">×</button></form>
+            </div>
+        </div>
+        <aside class="panel add-topic-panel">
+            <p class="eyebrow">NEXT STEP</p><h2>Add a topic</h2><p class="muted small">Break your course into small, trackable learning steps.</p>
+            <form th:action="@{/courses/{id}/topics(id=${course.id})}" method="post">
+                <label for="topicName">Topic name</label><input id="topicName" name="name" type="text" maxlength="150" placeholder="e.g. OOP concepts" required>
+                <button class="button primary full-width" type="submit">+ Add topic</button>
+            </form>
+            <div class="tip"><strong>Tip</strong><p>Add one topic at a time. Mark it complete when you've finished learning it.</p></div>
+        </aside>
+    </section>
+    <div class="delete-course"><form th:action="@{/courses/{id}/delete(id=${course.id})}" method="post"><button class="danger-link" type="submit" onclick="return confirm('Delete this course and all its topics?')">Delete this course</button></form></div>
+    <footer>Consistency beats intensity. Keep going.</footer>
+</main>
+</body>
+</html>
