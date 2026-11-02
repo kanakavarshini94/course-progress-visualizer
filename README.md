@@ -1,57 +1,91 @@
 # Course Progress Visualizer
 
-A beginner-friendly Java Full Stack project built with Java 21, Spring Boot, Spring MVC, Spring Data JPA, Thymeleaf, HTML, CSS and H2 database.
+A beginner-friendly Java Full Stack web application that helps users organize courses, manage topics, and track their learning progress through a visual dashboard.
 
-## Features
-- Dashboard with total courses, completed topics, pending topics and overall progress.
+## 🚀 Live Demo
+
+[View Live Application](https://course-progress-visualizer-1.onrender.com)
+
+## ✨ Features
+
+- Dashboard displaying total courses and learning progress.
 - Create and delete courses.
 - Add topics under each course.
 - Mark topics as completed or pending.
 - Visual progress bars and completion percentages.
-- H2 file database so saved data remains after restarting the app.
+- H2 file-based database for persistent local storage.
 
-## Requirements
+## 🛠️ Technologies Used
+
+- Java 21
+- Spring Boot
+- Spring MVC
+- Spring Data JPA
+- Thymeleaf
+- HTML5
+- CSS3
+- H2 Database
+- Maven
+- Git & GitHub
+- Render
+
+## 📸 Screenshots
+
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### Course Management
+![Course Management](screenshots/courses.png)
+
+### Topic Progress
+![Topic Progress](screenshots/topics.png)
+
+## 💻 Requirements
+
 - JDK 21 or later
-- Maven 3.6+ (or use the Maven wrapper if you add one)
+- Maven 3.6+
 
-## Run in VS Code
-1. Extract `course-progress-visualizer.zip`.
-2. Open the extracted `course-progress-visualizer` folder in VS Code.
-3. Confirm Java 21 is installed: open the VS Code terminal and run `java -version`.
-4. Run the application from the project folder:
-   - Windows: `mvnw.cmd spring-boot:run` (if Maven Wrapper is available), or `mvn spring-boot:run`
-   - macOS/Linux: `./mvnw spring-boot:run` (if Maven Wrapper is available), or `mvn spring-boot:run`
-5. Open `http://localhost:8080` in your browser.
+## ▶️ Run Locally
 
-If Maven is not installed, install Apache Maven or use the Spring Boot Dashboard extension in VS Code after importing the project as a Maven project.
+1. Clone the repository:
 
-## H2 database console
+   `git clone YOUR_GITHUB_REPOSITORY_URL`
+
+2. Open the project folder in VS Code.
+
+3. Run the application:
+
+   `mvn spring-boot:run`
+
+4. Open your browser:
+
+   `http://localhost:8080`
+
+## 🗄️ H2 Database Console
+
 - URL: `http://localhost:8080/h2-console`
 - JDBC URL: `jdbc:h2:file:./data/courseprogress`
-- User Name: `sa`
-- Password: leave empty
+- Username: `sa`
+- Password: Leave empty
 
-The `data` folder is created when the application first runs. Do not delete it if you want to keep your saved courses.
+## 📂 Project Structure
 
-## Project structure
-```
+```text
 src/main/java/com/varshini/courseprogress/
-  controller/   -> Web routes and request handling
-  model/        -> Course and Topic entities
-  repository/   -> Spring Data JPA repositories
-  service/      -> Business logic
+  controller/
+  model/
+  repository/
+  service/
+
 src/main/resources/
-  templates/    -> Thymeleaf pages
-  static/css/   -> Stylesheet
+  templates/
+  static/css/
 ```
 
-## Suggested demo
-1. Add a course named `Java Full Stack`.
-2. Open it and add topics such as Core Java, OOP, Collections, JDBC, Spring Boot, REST API and SQL.
-3. Mark the topics you have completed.
-4. Return to the dashboard and observe the updated progress percentage.
+## 👩‍💻 Author
 
-## Notes
-- This is a learning/portfolio project, not a production-ready application.
-- No login or multi-user account system is included in this starter version.
-- The first run requires internet access for Maven to download project dependencies. Google Fonts are optional; the layout uses fallback fonts if they cannot load.
+**Kanaka Varshini Kouthrapu**
+
+## 📝 Note
+
+This project was developed as a learning and portfolio project.
